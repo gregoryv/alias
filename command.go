@@ -14,6 +14,8 @@ type Command interface {
 	Run() error
 }
 
+type BasicFunc func() error
+
 func newCommand(alias string, cmd Command) error {
 	if DefaultRouter == nil {
 		DefaultRouter = NewRouter()
@@ -26,14 +28,14 @@ func newCommand(alias string, cmd Command) error {
 }
 
 type funcCommand struct {
-	command func() error
+	command BasicFunc
 }
 
 func (fc *funcCommand) Run() error {
 	return fc.command()
 }
 
-func NewCommandFunc(alias string, fn func() error) (Command, error) {
+func NewCommandFunc(alias string, fn BasicFunc) (Command, error) {
 	cmd := &funcCommand{command: fn}
 	return cmd, newCommand(alias, cmd)
 }
