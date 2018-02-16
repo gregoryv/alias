@@ -1,4 +1,4 @@
-package shal
+package alias
 
 import "fmt"
 
@@ -35,7 +35,7 @@ func (fc *funcCommand) Run() error {
 	return fc.command()
 }
 
-func NewCommandFunc(alias string, fn BasicFunc) (Command, error) {
+func NewBasic(alias string, fn BasicFunc) (Command, error) {
 	cmd := &funcCommand{command: fn}
 	return cmd, newCommand(alias, cmd)
 }

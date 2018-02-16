@@ -1,3 +1,3 @@
-shal - package implements shell alias for function calls
+alias - package implements mapped func aliases
 
 For easy command line utilities where first argument is a command(alias).

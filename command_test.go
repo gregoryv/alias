@@ -1,26 +1,26 @@
-package shal_test
+package alias_test
 
 import (
-	"github.com/gregoryv/shal"
+	"github.com/gregoryv/alias"
 	"testing"
 )
 
 var nop = func() error { return nil }
 
-func TestNewCommandFunc(t *testing.T) {
-	alias := "help"
-	cmd, _ := shal.NewCommandFunc(alias, nop)
+func TestNewBasic(t *testing.T) {
+	name := "help"
+	cmd, _ := alias.NewBasic(name, nop)
 	if cmd == nil {
-		t.Error("NewCommandFunc(...) should return a Command")
+		t.Error("should return a Command")
 	}
-	_, err := shal.NewCommandFunc(alias, nop)
+	_, err := alias.NewBasic(name, nop)
 	if err == nil {
-		t.Errorf("NewCommandFunc() should fail if trying to register under same name")
+		t.Errorf("should fail if trying to register under same name")
 	}
 }
 
 func TestCommand_Run(t *testing.T) {
-	cmd, _ := shal.NewCommandFunc("testsrun", nop)
+	cmd, _ := alias.NewBasic("testsrun", nop)
 	if err := cmd.Run(); err != nil {
 		t.Error("nop command should be runnable")
 	}
