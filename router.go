@@ -1,4 +1,4 @@
-package alias
+package ui
 
 import (
 	"fmt"
@@ -14,15 +14,15 @@ func NewRouter() Router {
 }
 
 // New registers a new alias, existing alias cannot be overriden
-func (r Router) New(alias string, cmd Command) error {
-	if _, ok := r[alias]; ok {
-		return fmt.Errorf("%q already registered", alias)
+func (r Router) New(ui string, cmd Command) error {
+	if _, ok := r[ui]; ok {
+		return fmt.Errorf("%q already registered", ui)
 	}
-	r[alias] = cmd
+	r[ui] = cmd
 	return nil
 }
 
 // New registers the command with the default router
-func New(alias string, cmd Command) (Command, error) {
-	return cmd, DefaultRouter.New(alias, cmd)
+func New(ui string, cmd Command) (Command, error) {
+	return cmd, DefaultRouter.New(ui, cmd)
 }
