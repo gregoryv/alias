@@ -1,4 +1,4 @@
-// Package cli implements router for subcommand cli applications
+// Package cli helps define sub commands
 package cli
 
 var DefaultCmds = NewCommandSet()
