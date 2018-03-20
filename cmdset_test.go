@@ -14,16 +14,6 @@ func TestNewCommandSet(t *testing.T) {
 	}
 }
 
-func TestAdd(t *testing.T) {
-	name := "help"
-	if err := cli.Add(name, nop); err != nil {
-		t.Error("should return a Command")
-	}
-	if err := cli.Add(name, nop); err == nil {
-		t.Errorf("should fail if trying to register under same name")
-	}
-}
-
 func TestCommandSet_List(t *testing.T) {
 	cmds := cli.NewCommandSet()
 	if result := cmds.List(); len(result) != 0 {
