@@ -2,9 +2,8 @@ package cli
 
 import (
 	"fmt"
+	"sort"
 )
-
-var DefaultRouter = NewRouter()
 
 // Command interface at it's most basic level
 type Command func() error
@@ -23,7 +22,12 @@ func (r Router) Add(name string, cmd Command) error {
 	return nil
 }
 
-// New registers the command with the default router
-func Add(name string, cmd Command) error {
-	return DefaultRouter.Add(name, cmd)
+// List returns a sorted list of commands
+func (r Router) List() []string {
+	result := make([]string, 0)
+	for name, _ := range r {
+		result = append(result, name)
+	}
+	sort.Sort(sort.StringSlice(result))
+	return result
 }
