@@ -8,8 +8,8 @@ import (
 
 var nop = func() error { return nil }
 
-func TestNewRouter(t *testing.T) {
-	if r := cli.NewRouter(); r == nil {
+func TestNewCommandSet(t *testing.T) {
+	if r := cli.NewCommandSet(); r == nil {
 		t.Error("NewRouter() returned nil")
 	}
 }
@@ -24,16 +24,16 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-func TestRouter_List(t *testing.T) {
-	router := cli.NewRouter()
-	if result := router.List(); len(result) != 0 {
+func TestCommandSet_List(t *testing.T) {
+	cmds := cli.NewCommandSet()
+	if result := cmds.List(); len(result) != 0 {
 		t.Errorf("should be empty by default")
 	}
-	router.Add("b", nop)
-	router.Add("c", nop)
-	router.Add("a", nop)
+	cmds.Add("b", nop)
+	cmds.Add("c", nop)
+	cmds.Add("a", nop)
 	exp := []string{"a", "b", "c"}
-	res := router.List()
+	res := cmds.List()
 	if fmt.Sprintf("%v", res) != fmt.Sprintf("%v", exp) {
 		t.Errorf("Expected %v, got %v", exp, res)
 	}
