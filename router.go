@@ -1,10 +1,10 @@
-package ui
+package cli
 
 import (
 	"fmt"
 )
 
-var defaultRouter = NewRouter()
+var DefaultRouter = NewRouter()
 
 // Command interface at it's most basic level
 type Command func() error
@@ -14,16 +14,16 @@ func NewRouter() Router {
 	return make(map[string]Command)
 }
 
-// New registers a new alias, existing alias cannot be overriden
-func (r Router) NewAlias(ui string, cmd Command) error {
-	if _, ok := r[ui]; ok {
-		return fmt.Errorf("%q already registered", ui)
+// New registers a new named command, cannot be override existing named commands
+func (r Router) Add(name string, cmd Command) error {
+	if _, ok := r[name]; ok {
+		return fmt.Errorf("%q already added", name)
 	}
-	r[ui] = cmd
+	r[name] = cmd
 	return nil
 }
 
 // New registers the command with the default router
-func NewAlias(ui string, cmd Command) (Command, error) {
-	return cmd, defaultRouter.NewAlias(ui, cmd)
+func Add(name string, cmd Command) error {
+	return DefaultRouter.Add(name, cmd)
 }
