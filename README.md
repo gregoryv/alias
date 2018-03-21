@@ -2,4 +2,4 @@
 
 [cli](https://godoc.org/github.com/gregoryv/cli) - package helps define sub commands
 
-For easy command line utilities where first argument is a command.
+Purpose of this package is to split the res
