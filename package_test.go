@@ -6,18 +6,15 @@ import (
 	"testing"
 )
 
-func TestAdd(t *testing.T) {
-	name := "help"
-	if err := cli.Add(name, nop); err != nil {
-		t.Error("should return a Command")
-	}
-	if err := cli.Add(name, nop); err == nil {
-		t.Errorf("should fail if trying to register under same name")
-	}
+func init() {
+	cli.Add("help", nop)
+}
+
+func TestCall(t *testing.T) {
+	cli.Call("help")
 }
 
 func TestList(t *testing.T) {
-	cli.Add("help", nop)
 	if res := cli.List(); len(res) == 0 {
 		t.Fail()
 	}

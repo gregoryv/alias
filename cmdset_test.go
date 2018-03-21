@@ -14,6 +14,19 @@ func TestNewCommandSet(t *testing.T) {
 	}
 }
 
+func TestCommandSet_Add(t *testing.T) {
+	cmds := cli.NewCommandSet()
+	if len(cmds) != 0 {
+		t.Errorf("should be empty by default")
+	}
+	if cmds.Add("n", nop); len(cmds) != 1 {
+		t.Errorf("should increase size of set")
+	}
+	if err := cmds.Add("n", nop); err == nil {
+		t.Errorf("should fail to add same name")
+	}
+}
+
 func TestCommandSet_List(t *testing.T) {
 	cmds := cli.NewCommandSet()
 	if result := cmds.List(); len(result) != 0 {
