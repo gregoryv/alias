@@ -13,21 +13,28 @@ func NewCommandSet() CommandSet {
 	return make(map[string]Command)
 }
 
-// New registers a new named command, cannot be override existing named commands
-func (r CommandSet) Add(name string, cmd Command) error {
-	if _, ok := r[name]; ok {
+// Add a named command to the set, cannot be override existing named commands
+func (cmds CommandSet) Add(name string, cmd Command) error {
+	if _, ok := cmds[name]; ok {
 		return fmt.Errorf("%q already added", name)
 	}
-	r[name] = cmd
+	cmds[name] = cmd
 	return nil
 }
 
-// List returns a sorted list of commands
-func (r CommandSet) List() []string {
-	result := make([]string, 0)
-	for name, _ := range r {
-		result = append(result, name)
+// List returns a sorted list of named commands
+func (cmds CommandSet) List() (names []string) {
+	names = make([]string, 0)
+	for name, _ := range cmds {
+		names = append(names, name)
 	}
-	sort.Sort(sort.StringSlice(result))
-	return result
+	sort.Sort(sort.StringSlice(names))
+	return
+}
+
+func (cmds CommandSet) Call(name string) error {
+	if cmd, ok := cmds[name]; ok {
+		return cmd()
+	}
+	return fmt.Errorf("%q no such command")
 }

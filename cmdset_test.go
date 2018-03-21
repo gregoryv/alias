@@ -28,3 +28,18 @@ func TestCommandSet_List(t *testing.T) {
 		t.Errorf("Expected %v, got %v", exp, res)
 	}
 }
+
+func TestCommandSet_Call(t *testing.T) {
+	cmds := cli.NewCommandSet()
+	called := false
+	cmds.Add("help", func() error {
+		called = true
+		return nil
+	})
+	if err := cmds.Call("help"); err != nil {
+		t.Fail()
+	}
+	if err := cmds.Call("not"); err == nil {
+		t.Fail()
+	}
+}
