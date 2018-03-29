@@ -6,16 +6,16 @@ import (
 	"testing"
 )
 
-var nop = func() error { return nil }
+var nop = cli.ActionFunc(func() error { return nil })
 
-func TestNewCommandSet(t *testing.T) {
-	if r := cli.NewCommandSet(); r == nil {
+func TestNewActionSet(t *testing.T) {
+	if r := cli.NewActionSet(); r == nil {
 		t.Error("NewRouter() returned nil")
 	}
 }
 
-func TestCommandSet_Add(t *testing.T) {
-	cmds := cli.NewCommandSet()
+func TestActionSet_Add(t *testing.T) {
+	cmds := cli.NewActionSet()
 	if len(cmds) != 0 {
 		t.Errorf("should be empty by default")
 	}
@@ -27,8 +27,8 @@ func TestCommandSet_Add(t *testing.T) {
 	}
 }
 
-func TestCommandSet_List(t *testing.T) {
-	cmds := cli.NewCommandSet()
+func TestActionSet_List(t *testing.T) {
+	cmds := cli.NewActionSet()
 	if result := cmds.List(); len(result) != 0 {
 		t.Errorf("should be empty by default")
 	}
@@ -42,13 +42,13 @@ func TestCommandSet_List(t *testing.T) {
 	}
 }
 
-func TestCommandSet_Call(t *testing.T) {
-	cmds := cli.NewCommandSet()
+func TestActionSet_Call(t *testing.T) {
+	cmds := cli.NewActionSet()
 	called := false
-	cmds.Add("help", func() error {
+	cmds.Add("help", cli.ActionFunc(func() error {
 		called = true
 		return nil
-	})
+	}))
 	if err := cmds.Call("help"); err != nil {
 		t.Fail()
 	}

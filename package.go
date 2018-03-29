@@ -1,19 +1,19 @@
-// Package cli helps define sub commands
+// Package cli helps define actions for commandline applications
 package cli
 
-var DefaultCmds = NewCommandSet()
+var DefaultActions = NewActionSet()
 
 // Add a named command to the default command set
-func Add(name string, cmd Command) error {
-	return DefaultCmds.Add(name, cmd)
+func Add(name string, cmd ActionFunc) error {
+	return DefaultActions.Add(name, cmd)
 }
 
 // Call a registered command in the default command set
 func Call(name string) error {
-	return DefaultCmds.Call(name)
+	return DefaultActions.Call(name)
 }
 
 // List commands in the default command set
 func List() []string {
-	return DefaultCmds.List()
+	return DefaultActions.List()
 }

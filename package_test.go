@@ -21,7 +21,7 @@ func TestList(t *testing.T) {
 }
 
 func ExampleAdd() {
-	cmds := cli.NewCommandSet()
+	cmds := cli.NewActionSet()
 	cmds.Add("help", nop)
 	cmds.Add("add", nop)
 	cmds.Add("list", nop)

@@ -5,16 +5,25 @@ import (
 	"sort"
 )
 
-// Command interface at it's most basic level
-type Command func() error
-type CommandSet map[string]Command
+type Action interface {
+	Run() error
+}
 
-func NewCommandSet() CommandSet {
-	return make(map[string]Command)
+// Command interface at it's most basic level
+type ActionFunc func() error
+
+func (cmd ActionFunc) Run() error {
+	return cmd()
+}
+
+type ActionSet map[string]Action
+
+func NewActionSet() ActionSet {
+	return make(map[string]Action)
 }
 
 // Add a named command to the set, cannot be override existing named commands
-func (cmds CommandSet) Add(name string, cmd Command) error {
+func (cmds ActionSet) Add(name string, cmd Action) error {
 	if _, ok := cmds[name]; ok {
 		return fmt.Errorf("%q already added", name)
 	}
@@ -23,7 +32,7 @@ func (cmds CommandSet) Add(name string, cmd Command) error {
 }
 
 // List returns a sorted list of named commands
-func (cmds CommandSet) List() (names []string) {
+func (cmds ActionSet) List() (names []string) {
 	names = make([]string, 0)
 	for name, _ := range cmds {
 		names = append(names, name)
@@ -32,9 +41,9 @@ func (cmds CommandSet) List() (names []string) {
 	return
 }
 
-func (cmds CommandSet) Call(name string) error {
+func (cmds ActionSet) Call(name string) error {
 	if cmd, ok := cmds[name]; ok {
-		return cmd()
+		return cmd.Run()
 	}
 	return fmt.Errorf("%q no such command")
 }
