@@ -22,7 +22,7 @@ func TestList(t *testing.T) {
 
 func ExampleAdd() {
 	cmds := cli.NewActionSet()
-	cmds.Add("help", nop)
+	cmds.Add("help", cli.ActionFunc(func() error { return nil }))
 	cmds.Add("add", nop)
 	cmds.Add("list", nop)
 	for _, name := range cmds.List() {

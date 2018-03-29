@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/gregoryv/cli.svg?branch=master)](https://travis-ci.org/gregoryv/cli)
 
-[cli](https://godoc.org/github.com/gregoryv/cli) - package helps define sub commands
+[cli](https://godoc.org/github.com/gregoryv/cli) - package helps define actions for commandline apps
 
-Purpose of this package is to split the res
+## Quick start
+
+See [package example](https://godoc.org/github.com/gregoryv/cli#example-Add)
